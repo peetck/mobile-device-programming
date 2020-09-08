@@ -1,22 +1,19 @@
 import React from "react";
-import { View, Text, TouchableNativeFeedback, StyleSheet } from "react-native";
+import { Text, TouchableOpacity, StyleSheet } from "react-native";
 
 const MyButton = (props) => {
   return (
-    <TouchableNativeFeedback
+    <TouchableOpacity
+      style={{
+        ...styles.button,
+        backgroundColor: props.color ? props.color : "#1E2326",
+      }}
       onPress={() => {
         props.onTap(props.label);
       }}
     >
-      <View
-        style={{
-          ...styles.button,
-          backgroundColor: props.color ? props.color : "#1E2326",
-        }}
-      >
-        <Text style={styles.label}>{props.label}</Text>
-      </View>
-    </TouchableNativeFeedback>
+      <Text style={styles.label}>{props.label}</Text>
+    </TouchableOpacity>
   );
 };
 
