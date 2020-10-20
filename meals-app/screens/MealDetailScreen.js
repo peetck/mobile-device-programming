@@ -1,5 +1,15 @@
 import React from "react";
-import { View, Text, Button, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  Button,
+  StyleSheet,
+  ScrollView,
+  ImageBackground,
+} from "react-native";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+
+import CustomHeaderButton from "../components/CustomHeaderButton";
 import { MEALS } from "../data/dummy-data";
 
 const MealDetailScreen = (props) => {
@@ -8,17 +18,47 @@ const MealDetailScreen = (props) => {
   const meal = MEALS.find((meal) => meal.id === id);
 
   return (
-    <View style={styles.screen}>
-      <Text>Dish: {meal.title}</Text>
-      <Text>Steps: {meal.steps}</Text>
-      <Button
-        title="Go Back to Categories"
-        onPress={() => {
-          // เขียนโค้ดเพิ่ม
-          props.navigation.popToTop();
-        }}
-      />
-    </View>
+    <ScrollView>
+      <View style={styles.screen}>
+        <View style={styles.mealItem}>
+          <View>
+            <View style={{ ...styles.mealRow, ...styles.mealHeader }}>
+              <ImageBackground
+                source={{ uri: meal.imageUrl }}
+                style={styles.bgImage}
+              />
+            </View>
+            <View style={{ ...styles.mealRow, ...styles.mealDetail }}>
+              <Text>{meal.duration}m</Text>
+              <Text>{meal.complexity.toUpperCase()}</Text>
+              <Text>{meal.affordability.toUpperCase()}</Text>
+            </View>
+          </View>
+        </View>
+
+        <Text style={styles.title}>Ingredients</Text>
+        <View style={styles.mapContainer}>
+          {meal.ingredients.map((ingredient) => (
+            <Text style={styles.text}>{ingredient}</Text>
+          ))}
+        </View>
+
+        <Text style={styles.title}>Steps</Text>
+        <View style={styles.mapContainer}>
+          {meal.steps.map((ingredient) => (
+            <Text style={styles.text}>{ingredient}</Text>
+          ))}
+        </View>
+
+        <Button
+          title="Go Back to Categories"
+          onPress={() => {
+            // เขียนโค้ดเพิ่ม
+            props.navigation.popToTop();
+          }}
+        />
+      </View>
+    </ScrollView>
   );
 };
 
@@ -28,14 +68,61 @@ MealDetailScreen.navigationOptions = (navigationData) => {
   const meal = MEALS.find((meal) => meal.id === id);
   return {
     headerTitle: meal.title,
+    headerRight: () => (
+      <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+        <Item
+          title="favorite"
+          iconName="ios-star"
+          onPress={() => {
+            navigationData.navigation.toggleDrawer();
+          }}
+        />
+      </HeaderButtons>
+    ),
   };
 };
 
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    justifyContent: "center",
     alignItems: "center",
+  },
+  mapContainer: {
+    alignSelf: "flex-start",
+  },
+  mealItem: {
+    height: 200,
+    width: "100%",
+    backgroundColor: "#f5f5f5",
+    borderRadius: 0,
+    overflow: "hidden",
+  },
+  mealRow: {
+    flexDirection: "row",
+  },
+  mealHeader: {
+    height: "85%",
+  },
+  mealDetail: {
+    paddingHorizontal: 10,
+    justifyContent: "space-between",
+    alignItems: "center",
+    height: "15%",
+  },
+  bgImage: {
+    width: "100%",
+    height: "100%",
+    justifyContent: "flex-end",
+  },
+  title: {
+    fontSize: 18,
+    margin: 20,
+    textAlign: "center",
+    fontWeight: "bold",
+  },
+  text: {
+    marginVertical: 5,
+    marginHorizontal: 15,
   },
 });
 

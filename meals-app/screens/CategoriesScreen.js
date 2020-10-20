@@ -1,15 +1,10 @@
 import React from "react";
-import {
-  View,
-  Text,
-  Button,
-  FlatList,
-  StyleSheet,
-  TouchableOpacity,
-  Platform,
-} from "react-native";
+import { FlatList, StyleSheet } from "react-native";
+
 import { CATEGORIES } from "../data/dummy-data";
 import CategoryGridTile from "../components/CategoryGridTile";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import CustomHeaderButton from "../components/CustomHeaderButton";
 
 const CategoriesScreen = (props) => {
   const renderGridItem = (itemData) => {
@@ -43,8 +38,21 @@ const CategoriesScreen = (props) => {
 };
 
 // กำหนด navigationOptions เช่่น การปรับแต่งเฮดเดอร์ที่นี่ได้
-CategoriesScreen.navigationOptions = {
-  headerTitle: "Meal Categories",
+CategoriesScreen.navigationOptions = (navigationData) => {
+  return {
+    headerTitle: "Meal Categories",
+    headerLeft: () => (
+      <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+        <Item
+          title="Menu"
+          iconName="ios-menu"
+          onPress={() => {
+            navigationData.navigation.toggleDrawer();
+          }}
+        />
+      </HeaderButtons>
+    ),
+  };
 };
 
 const styles = StyleSheet.create({
