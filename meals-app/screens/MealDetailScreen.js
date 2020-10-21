@@ -39,14 +39,18 @@ const MealDetailScreen = (props) => {
         <Text style={styles.title}>Ingredients</Text>
         <View style={styles.mapContainer}>
           {meal.ingredients.map((ingredient) => (
-            <Text style={styles.text}>{ingredient}</Text>
+            <Text style={styles.text} key={ingredient}>
+              {ingredient}
+            </Text>
           ))}
         </View>
 
         <Text style={styles.title}>Steps</Text>
         <View style={styles.mapContainer}>
-          {meal.steps.map((ingredient) => (
-            <Text style={styles.text}>{ingredient}</Text>
+          {meal.steps.map((step) => (
+            <Text style={styles.text} key={step}>
+              {step}
+            </Text>
           ))}
         </View>
 
@@ -54,7 +58,7 @@ const MealDetailScreen = (props) => {
           title="Go Back to Categories"
           onPress={() => {
             // เขียนโค้ดเพิ่ม
-            props.navigation.popToTop();
+            props.navigation.navigate("Categories");
           }}
         />
       </View>
@@ -87,9 +91,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
   },
-  mapContainer: {
-    alignSelf: "flex-start",
-  },
   mealItem: {
     height: 200,
     width: "100%",
@@ -119,6 +120,9 @@ const styles = StyleSheet.create({
     margin: 20,
     textAlign: "center",
     fontWeight: "bold",
+  },
+  mapContainer: {
+    alignSelf: "flex-start",
   },
   text: {
     marginVertical: 5,

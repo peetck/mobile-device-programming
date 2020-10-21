@@ -9,7 +9,7 @@ const FavoritesScreen = (props) => {
 
   return (
     <View style={styles.screen}>
-      <MealList listData={favMeals} />
+      <MealList listData={favMeals} navigation={props.navigation} />
     </View>
   );
 };
