@@ -17,6 +17,7 @@ const MealList = (props) => {
           // เขียนโค้ดเพิ่ม
           props.navigation.navigate("MealDetail", {
             id: itemData.item.id,
+            mealTitle: itemData.item.title,
           });
         }}
       />
